@@ -110,10 +110,18 @@ class HelperTest < ActionView::TestCase
 
   def test_javascript_pack_tag_split_chunks
     assert_equal \
-      %(<script src="/packs/vendors~application~bootstrap-c20632e7baf2c81200d3.chunk.js"></script>\n) +
-        %(<script src="/packs/vendors~application-e55f2aae30c07fb6d82a.chunk.js"></script>\n) +
+      %(<script src="/packs/runtime~application-e55f2aae30c07fb6d82a.chunk.js"></script>\n) +
+        %(<script src="/packs/vendor-16838bab065ae1e314.js.chunk.js"></script>\n) +
         %(<script src="/packs/application-k344a6d59eef8632c9d1.js"></script>),
       javascript_packs_with_chunks_tag("application")
+
+    assert_equal \
+      %(<script src="/packs/runtime~application-e55f2aae30c07fb6d82a.chunk.js"></script>\n) +
+        %(<script src="/packs/vendor-16838bab065ae1e314.js.chunk.js"></script>\n) +
+        %(<script src="/packs/application-k344a6d59eef8632c9d1.js"></script>\n)+
+        %(<script src="/packs/js/runtime~hello_stimulus-55f7a7c78467445c9831.js"></script>\n)+
+        %(<script src="/packs/js/hello_stimulus-f4gcfe6de306eac5e652.chunk.js"></script>),
+      javascript_packs_with_chunks_tag("application", "hello_stimulus")
   end
 
   def test_preload_pack_asset
